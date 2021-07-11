@@ -1,0 +1,8 @@
+com\imooc\pojo\AppUser.class
+com\imooc\my\mapper\MyMapper.class
+com\imooc\user\mapper\AppUserMapper.class
+com\imooc\mybatis\utils\AdminGenerator.class
+com\imooc\user\mapper\FansMapper.class
+com\imooc\mybatis\utils\UserGenerator.class
+com\imooc\pojo\Fans.class
+com\imooc\mybatis\utils\ArticleGenerator.class
