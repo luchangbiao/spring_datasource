@@ -2,6 +2,7 @@ package com.imooc.api;
 
 import com.imooc.utils.RedisOperator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -22,6 +23,8 @@ public class BaseController {
     public static final String MOBILE_SMSCODE = "mobile:smscode";
     public static final String REDIS_USER_TOKEN = "redis_user_token";
     public static final String REDIS_USER_INFO = "redis_user_info";
+    @Value("${website.domain-name}")
+    public String DOMAIN_NAME;
     public static final Integer COOKIE_MONTH = 30 * 24 * 60 * 60;
 
     /**
@@ -66,8 +69,8 @@ public class BaseController {
                                Integer maxAge) {
         Cookie cookie = new Cookie(cookieName, cookieValue);
         cookie.setMaxAge(maxAge);
-        cookie.setDomain("imoocnews.com");
-        // cookie.setDomain(DOMAIN_NAME);
+        //cookie.setDomain("imoocnews.com");
+         cookie.setDomain(DOMAIN_NAME);
         cookie.setPath("/");
         response.addCookie(cookie);
     }
