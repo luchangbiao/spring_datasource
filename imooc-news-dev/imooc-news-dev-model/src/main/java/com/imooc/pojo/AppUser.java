@@ -1,8 +1,7 @@
 package com.imooc.pojo;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -62,7 +61,7 @@ public class AppUser {
     private String district;
 
     /**
-     * 用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能在作家中心操作，不能关注。2：已冻结。
+     * 用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能发表评论，不能点赞，不能关注。2：已冻结。
      */
     @Column(name = "active_status")
     private Integer activeStatus;
@@ -280,18 +279,18 @@ public class AppUser {
     }
 
     /**
-     * 获取用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能在作家中心操作，不能关注。2：已冻结。
+     * 获取用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能发表评论，不能点赞，不能关注。2：已冻结。
      *
-     * @return active_status - 用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能在作家中心操作，不能关注。2：已冻结。
+     * @return active_status - 用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能发表评论，不能点赞，不能关注。2：已冻结。
      */
     public Integer getActiveStatus() {
         return activeStatus;
     }
 
     /**
-     * 设置用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能在作家中心操作，不能关注。2：已冻结。
+     * 设置用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能发表评论，不能点赞，不能关注。2：已冻结。
      *
-     * @param activeStatus 用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能在作家中心操作，不能关注。2：已冻结。
+     * @param activeStatus 用户状态：0：未激活。 1：已激活：基本信息是否完善，真实姓名，邮箱地址，性别，生日，住址等，如果没有完善，则用户不能发表评论，不能点赞，不能关注。2：已冻结。
      */
     public void setActiveStatus(Integer activeStatus) {
         this.activeStatus = activeStatus;
