@@ -1,2 +1,9 @@
-F:\workspaces\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\controller\user\HelloControllerApi.java
-F:\workspaces\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\my\mapper\MyMapper.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\config\CorsConfig.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\my\mapper\MyMapper.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\controller\user\PassportControllerApi.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\BaseController.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\interceptors\PassportInterceptor.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\controller\user\UserControllerApi.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\config\InterceptorConfig.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\controller\user\HelloControllerApi.java
+F:\imooc-news\imooc-news-dev\imooc-news-dev-service-api\src\main\java\com\imooc\api\config\Swagger2.java
