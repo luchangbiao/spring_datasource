@@ -46,6 +46,7 @@ public class PassportController extends BaseController implements PassportContro
 
         // 把验证码存入redis，用于后续进行验证
         redis.set(MOBILE_SMSCODE + ":" + mobile, random, 30 * 60);
+        logger.info("验证码为："+random);
 
         smsUtils.sendSMS(MyInfo.getMobile(), random);
         return GraceJSONResult.ok();
