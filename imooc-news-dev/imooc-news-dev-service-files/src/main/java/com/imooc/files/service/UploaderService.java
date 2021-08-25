@@ -9,6 +9,8 @@ public interface UploaderService {
      */
     public String uploadFdfs(MultipartFile file, String fileExtName) throws Exception;
 
-
+    public String uploadOSS(MultipartFile file,
+                            String userId,
+                            String fileExtName) throws Exception;
 
 }

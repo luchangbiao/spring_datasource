@@ -47,8 +47,8 @@ public class FileUploaderController implements FileUploaderControllerApi {
                 }
 
                 // 执行上传
-                path = uploaderService.uploadFdfs(file, suffix);
-//                path = uploaderService.uploadOSS(file, userId, suffix);
+           //     path = uploaderService.uploadFdfs(file, suffix);
+               path = uploaderService.uploadOSS(file, userId, suffix);
 
             } else {
                 return GraceJSONResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_NULL_ERROR);
@@ -61,8 +61,8 @@ public class FileUploaderController implements FileUploaderControllerApi {
 
         String finalPath = "";
         if (StringUtils.isNotBlank(path)) {
-            finalPath = fileResource.getHost() + path;
-//            finalPath = fileResource.getOssHost() + path;
+           // finalPath = fileResource.getHost() + path;
+          finalPath = fileResource.getOssHost() + path;
         } else {
             return GraceJSONResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_FAILD);
         }

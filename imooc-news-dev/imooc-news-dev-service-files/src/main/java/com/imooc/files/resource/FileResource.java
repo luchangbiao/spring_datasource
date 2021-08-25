@@ -10,6 +10,43 @@ import org.springframework.stereotype.Component;
 public class FileResource {
 
     private String host;
+    private String endpoint;
+    private String bucketName;
+    private String objectName;
+
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
+    }
+
+    public String getBucketName() {
+        return bucketName;
+    }
+
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
+    }
+
+    public String getObjectName() {
+        return objectName;
+    }
+
+    public void setObjectName(String objectName) {
+        this.objectName = objectName;
+    }
+
+    public String getOssHost() {
+        return ossHost;
+    }
+
+    public void setOssHost(String ossHost) {
+        this.ossHost = ossHost;
+    }
+
+    private String ossHost;
 
 
     public String getHost() {
