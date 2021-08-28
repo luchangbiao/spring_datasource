@@ -5,6 +5,7 @@ import com.imooc.files.resource.FileResource;
 import com.imooc.files.service.UploaderService;
 import com.imooc.grace.result.GraceJSONResult;
 import com.imooc.grace.result.ResponseStatusEnum;
+import com.imooc.utils.extend.AliImageReviewUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,9 @@ public class FileUploaderController implements FileUploaderControllerApi {
 
     @Autowired
     private FileResource fileResource;
+
+    @Autowired
+    private AliImageReviewUtils aliImageReviewUtils;
 
 
     @Override
@@ -67,8 +71,33 @@ public class FileUploaderController implements FileUploaderControllerApi {
             return GraceJSONResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_FAILD);
         }
 
-//        return GraceJSONResult.ok(doAliImageReview(finalPath));
-        return GraceJSONResult.ok(finalPath);
+       return GraceJSONResult.ok(doAliImageReview(finalPath));
+       // return GraceJSONResult.ok(finalPath);
+    }
+
+
+    public static final String FAILED_IMAGE_URL = "https://imooc-news-dev-lcb.oss-cn-shanghai.aliyuncs.com/images/123.jpeg";
+    private String doAliImageReview(String pendingImageUrl) {
+
+        /**
+         * fastdfs 默认存在于内网，无法被阿里云内容管理服务检查到
+         * 需要配置到公网才行：
+         * 1. 内网穿透，natppp/花生壳/ngrok
+         * 2. 路由配置端口映射
+         * 3. fdfs 发布到云服务器
+         */
+        boolean result = false;
+        try {
+            result = aliImageReviewUtils.reviewImage(pendingImageUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (!result) {
+            return FAILED_IMAGE_URL;
+        }
+
+        return pendingImageUrl;
     }
 
 
