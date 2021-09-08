@@ -1,5 +1,6 @@
 package com.imooc.api.config;
 
+import com.imooc.api.interceptors.AdminTokenInterceptor;
 import com.imooc.api.interceptors.PassportInterceptor;
 import com.imooc.api.interceptors.UserActiveInterceptor;
 import com.imooc.api.interceptors.UserTokenInterceptor;
@@ -26,6 +27,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
         return new UserActiveInterceptor();
     }
 
+    @Bean
+    public AdminTokenInterceptor adminTokenInterceptor() {
+        return new AdminTokenInterceptor();
+    }
+
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -39,5 +45,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/fs/uploadSomeFiles")
                 .addPathPatterns("/fans/follow")
                 .addPathPatterns("/fans/unfollow");
+        registry.addInterceptor(adminTokenInterceptor())
+                .addPathPatterns("/adminMng/adminIsExist")
+                .addPathPatterns("/adminMng/addNewAdmin")
+                .addPathPatterns("/adminMng/getAdminList")
+                .addPathPatterns("/fs/uploadToGridFS")
+                .addPathPatterns("/fs/readInGridFS");
     }
 }

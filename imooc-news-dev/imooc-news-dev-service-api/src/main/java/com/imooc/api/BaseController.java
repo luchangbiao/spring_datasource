@@ -29,6 +29,9 @@ public class BaseController {
     public static final Integer COOKIE_MONTH = 30 * 24 * 60 * 60;
     public static final Integer COOKIE_DELETE = 0;
 
+    public static final Integer COMMON_START_PAGE = 1;
+    public static final Integer COMMON_PAGE_SIZE = 10;
+
     /**
      * 获取BO中的错误信息
      *
@@ -75,6 +78,18 @@ public class BaseController {
          cookie.setDomain(DOMAIN_NAME);
         cookie.setPath("/");
         response.addCookie(cookie);
+    }
+
+    public void deleteCookie(HttpServletRequest request,
+                             HttpServletResponse response,
+                             String cookieName) {
+        try {
+            String deleteValue = URLEncoder.encode("", "utf-8");
+            setCookieValue(request, response, cookieName, deleteValue, COOKIE_DELETE);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
