@@ -70,8 +70,8 @@ public class FileUploaderController implements FileUploaderControllerApi {
                 }
 
                 // 执行上传
-           //     path = uploaderService.uploadFdfs(file, suffix);
-               path = uploaderService.uploadOSS(file, userId, suffix);
+                //     path = uploaderService.uploadFdfs(file, suffix);
+                path = uploaderService.uploadOSS(file, userId, suffix);
 
             } else {
                 return GraceJSONResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_NULL_ERROR);
@@ -84,18 +84,19 @@ public class FileUploaderController implements FileUploaderControllerApi {
 
         String finalPath = "";
         if (StringUtils.isNotBlank(path)) {
-           // finalPath = fileResource.getHost() + path;
-          finalPath = fileResource.getOssHost() + path;
+            // finalPath = fileResource.getHost() + path;
+            finalPath = fileResource.getOssHost() + path;
         } else {
             return GraceJSONResult.errorCustom(ResponseStatusEnum.FILE_UPLOAD_FAILD);
         }
 
-       return GraceJSONResult.ok(doAliImageReview(finalPath));
-       // return GraceJSONResult.ok(finalPath);
+        return GraceJSONResult.ok(doAliImageReview(finalPath));
+        // return GraceJSONResult.ok(finalPath);
     }
 
 
     public static final String FAILED_IMAGE_URL = "https://imooc-news-dev-lcb.oss-cn-shanghai.aliyuncs.com/images/123.jpeg";
+
     private String doAliImageReview(String pendingImageUrl) {
 
         /**
@@ -186,6 +187,21 @@ public class FileUploaderController implements FileUploaderControllerApi {
         gridFSBucket.downloadToStream(new ObjectId(faceId), os);
 
         return myFile;
+    }
+
+    @Override
+    public GraceJSONResult readFace64InGridFS(String faceId,
+                                              HttpServletRequest request,
+                                              HttpServletResponse response)
+            throws Exception {
+
+        // 0. 获得gridfs中人脸文件
+        File myface = readGridFSByFaceId(faceId);
+
+        // 1. 转换人脸为base64
+        String base64Face = FileUtils.fileToBase64(myface);
+
+        return GraceJSONResult.ok(base64Face);
     }
 
 }
