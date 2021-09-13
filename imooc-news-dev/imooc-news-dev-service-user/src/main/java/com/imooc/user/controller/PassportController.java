@@ -46,6 +46,7 @@ public class PassportController extends BaseController implements PassportContro
 
         // 把验证码存入redis，用于后续进行验证
         redis.set(MOBILE_SMSCODE + ":" + mobile, random, 30 * 60);
+        logger.info("验证码为："+random);
 
         smsUtils.sendSMS(MyInfo.getMobile(), random);
         return GraceJSONResult.ok();
@@ -100,6 +101,18 @@ public class PassportController extends BaseController implements PassportContro
         redis.del(MOBILE_SMSCODE + ":" + mobile);
         // 5. 返回用户状态
         return GraceJSONResult.ok(userActiveStatus);
+    }
+    @Override
+    public GraceJSONResult logout(String userId,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response) {
+
+        redis.del(REDIS_USER_TOKEN + ":" + userId);
+
+        setCookie(request, response, "utoken", "", COOKIE_DELETE);
+        setCookie(request, response, "uid", "", COOKIE_DELETE);
+
+        return GraceJSONResult.ok();
     }
 
 

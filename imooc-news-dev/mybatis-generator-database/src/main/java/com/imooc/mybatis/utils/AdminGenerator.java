@@ -17,9 +17,10 @@ public class AdminGenerator {
 		List<String> warnings = new ArrayList<String>();
 		boolean overwrite = true;
 		//指定 逆向工程配置文件
-		File configFile = new File("mybatis-generator-database"
-											+ File.separator
-											+ "generatorConfig-admin.xml");
+		File configFile = new File(
+				"F:\\imooc-news\\imooc-news-dev\\mybatis-generator-database\\generatorConfig-admin.xml"
+
+				);
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = cp.parseConfiguration(configFile);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);
