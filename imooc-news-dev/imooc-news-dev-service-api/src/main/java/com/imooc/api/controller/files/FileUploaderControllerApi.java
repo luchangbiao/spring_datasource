@@ -26,6 +26,20 @@ public interface FileUploaderControllerApi {
                                       MultipartFile file) throws Exception;
 
     /**
+     * 上传多文件
+     *
+     * @param userId
+     * @param files
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/uploadSomeFiles")
+    public GraceJSONResult uploadSomeFiles(@RequestParam String userId,
+                                      MultipartFile[] files) throws Exception;
+
+
+
+    /**
      * 文件上传到mongodb的gridfs中
      * @param newAdminBO
      * @return

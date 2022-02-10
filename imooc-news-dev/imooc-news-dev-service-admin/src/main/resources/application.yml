@@ -38,6 +38,10 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  data:
+      mongodb:
+        uri: mongodb://root:root@192.168.102.160:27017
+        database: imooc-news
 
 ############################################################
 #

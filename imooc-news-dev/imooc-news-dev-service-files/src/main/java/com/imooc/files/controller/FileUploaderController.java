@@ -28,6 +28,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class FileUploaderController implements FileUploaderControllerApi {
@@ -94,6 +96,50 @@ public class FileUploaderController implements FileUploaderControllerApi {
         // return GraceJSONResult.ok(finalPath);
     }
 
+    @Override
+    public GraceJSONResult uploadSomeFiles(String userId,
+                                           MultipartFile[] files) throws Exception {
+        //申明一个list,用于存放多个图片的路径,返回给前端
+        List<String> imageUrlList = new ArrayList<>();
+        if (files != null && files.length > 0) {
+            for (MultipartFile file : files) {
+                String path = "";
+                if (file != null) {
+                    // 获得文件上传的名称
+                    String fileName = file.getOriginalFilename();
+                    // 判断文件名不能为空
+                    if (StringUtils.isNotBlank(fileName)) {
+                        String fileNameArr[] = fileName.split("\\.");
+                        // 获得后缀
+                        String suffix = fileNameArr[fileNameArr.length - 1];
+                        // 判断后缀符合我们的预定义规范
+                        if (!suffix.equalsIgnoreCase("png") &&
+                                !suffix.equalsIgnoreCase("jpg") &&
+                                !suffix.equalsIgnoreCase("jpeg")
+                        ) {
+                            continue;
+                        }
+                        // 执行上传
+                        //     path = uploaderService.uploadFdfs(file, suffix);
+                        path = uploaderService.uploadOSS(file, userId, suffix);
+                    } else {
+                        continue;
+                    }
+                } else {
+                    continue;
+                }
+                String finalPath = "";
+                if (StringUtils.isNotBlank(path)) {
+                    finalPath = fileResource.getOssHost() + path;
+                    //FIXME:放入到imagelist之前，需要对图片做一次审核
+                    imageUrlList.add(finalPath);
+                } else {
+                    continue;
+                }
+            }
+        }
+        return GraceJSONResult.ok(imageUrlList);
+    }
 
     public static final String FAILED_IMAGE_URL = "https://imooc-news-dev-lcb.oss-cn-shanghai.aliyuncs.com/images/123.jpeg";
 

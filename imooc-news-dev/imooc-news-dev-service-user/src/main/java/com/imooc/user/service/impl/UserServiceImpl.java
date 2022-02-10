@@ -6,7 +6,9 @@ import com.imooc.exception.GraceException;
 import com.imooc.grace.result.ResponseStatusEnum;
 import com.imooc.pojo.AppUser;
 import com.imooc.pojo.bo.UpdateUserInfoBO;
+import com.imooc.pojo.vo.PublisherVO;
 import com.imooc.user.mapper.AppUserMapper;
+import com.imooc.user.mapper.AppUserMapperCustom;
 import com.imooc.user.service.UserService;
 import com.imooc.utils.DateUtil;
 import com.imooc.utils.DesensitizationUtil;
@@ -20,6 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     public RedisOperator redis;
+
+    @Autowired
+    public AppUserMapperCustom appUserMapperCustom;
     public static final String REDIS_USER_INFO = "redis_user_info";
 
     private static final String USER_FACE0 = "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png";
@@ -116,5 +124,14 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public List<PublisherVO> getUserList(List<String> userIdList) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userIdList", userIdList);
+        List<PublisherVO> publisherList = appUserMapperCustom.getUserList(map);
+
+        return publisherList;
+    }
 
 }
