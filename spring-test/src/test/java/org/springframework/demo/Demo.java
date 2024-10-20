@@ -5,7 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Demo {
 	public static void main(String[] args) {
-		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Config.class);
+		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Student.class);
 		Student student = (Student) applicationContext.getBean("student");
 		student.say();
 	}
