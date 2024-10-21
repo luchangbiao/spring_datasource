@@ -29,6 +29,19 @@
 		<property name="gender" value="男"></property>
 	</bean>
 
+	<!-- 定义数据库驱动 -->
+	<bean id="dataSourceDriver" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:datasource.properties" />
+	</bean>
+
+	<!-- 定义数据源 -->
+	<bean id="dataSource" class="org.springframework.demo.DataSource">
+		<property name="driverClassName" value="${database.driver}" />
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+	</bean>
+
 	<bean class="org.springframework.nashibing.test.FirstBeanFactoryPostProcessor"></bean>
 	<bean class="org.springframework.nashibing.test.SecondBeanFactoryPostProcessor"></bean>
 </beans>

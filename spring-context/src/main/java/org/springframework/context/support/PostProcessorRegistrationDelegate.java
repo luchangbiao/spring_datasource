@@ -125,15 +125,14 @@ final class PostProcessorRegistrationDelegate {
 			invokeBeanFactoryPostProcessors(beanFactoryPostProcessors, beanFactory);
 		}
 
+		//这个方法用于获取指定类型的所有bean的名称。
 		String[] postProcessorNames =
 				beanFactory.getBeanNamesForType(BeanFactoryPostProcessor.class, true, false);
-
 
 		List<BeanFactoryPostProcessor> priorityOrderedPostProcessors = new ArrayList<>();
 		List<String> orderedPostProcessorNames = new ArrayList<>();
 		List<String> nonOrderedPostProcessorNames = new ArrayList<>();
-
-
+		//isTypeMatch 用于检查bean工厂中的某个bean实例是否可以转换为指定的目标类型
 		for (String ppName : postProcessorNames) {
 			if (processedBeans.contains(ppName)) {
 			} else if (beanFactory.isTypeMatch(ppName, PriorityOrdered.class)) {

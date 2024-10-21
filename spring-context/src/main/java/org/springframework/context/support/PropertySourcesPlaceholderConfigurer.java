@@ -127,16 +127,14 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 	 * ignored</strong>. This method is designed to give the user fine-grained control over property
 	 * sources, and once set, the configurer makes no assumptions about adding additional sources.
 	 */
+
+
 	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		if (this.propertySources == null) {
 			this.propertySources = new MutablePropertySources();
 			if (this.environment != null) {
 				PropertyResolver propertyResolver = this.environment;
-				// If the ignoreUnresolvablePlaceholders flag is set to true, we have to create a
-				// local PropertyResolver to enforce that setting, since the Environment is most
-				// likely not configured with ignoreUnresolvablePlaceholders set to true.
-				// See https://github.com/spring-projects/spring-framework/issues/27947
 				if (this.ignoreUnresolvablePlaceholders && (this.environment instanceof ConfigurableEnvironment)) {
 					ConfigurableEnvironment configurableEnvironment = (ConfigurableEnvironment) this.environment;
 					PropertySourcesPropertyResolver resolver =
@@ -173,6 +171,8 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 		processProperties(beanFactory, new PropertySourcesPropertyResolver(this.propertySources));
 		this.appliedPropertySources = this.propertySources;
 	}
+
+
 
 	/**
 	 * Visit each bean definition in the given bean factory and attempt to replace ${...} property
