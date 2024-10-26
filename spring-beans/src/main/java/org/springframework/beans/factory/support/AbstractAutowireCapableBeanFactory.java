@@ -1792,6 +1792,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			}, getAccessControlContext());
 		}
 		else {
+			/**
+			 * 容器对象的属性赋值
+			 */
 			invokeAwareMethods(beanName, bean);
 		}
 
@@ -1815,9 +1818,23 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		return wrappedBean;
 	}
 
+	/**
+	 * 回调bean中Aware接口的方法
+	 * @param beanName
+	 * @param bean
+	 */
 	private void invokeAwareMethods(String beanName, Object bean) {
+		/**
+		 * 如果bean是Aware的实例
+		 */
 		if (bean instanceof Aware) {
+			/**
+			 * 如果bean是BeanNameAware的实例
+			 */
 			if (bean instanceof BeanNameAware) {
+				/**
+				 *调用bean的setBeanName方法
+				 */
 				((BeanNameAware) bean).setBeanName(beanName);
 			}
 			if (bean instanceof BeanClassLoaderAware) {
