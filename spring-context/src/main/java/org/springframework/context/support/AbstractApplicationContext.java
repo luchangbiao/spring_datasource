@@ -560,13 +560,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 			//创建容器对象:DefalutListableBeanFactory
 			//加载xml配置文件的属性值到当前工厂中,最重要的就是BeanDefinition
+			//obtainFreshBeanFactory 方法调用了两个抽象方法 refreshBeanFactory和 getBeanFactory 这样具体要取那中BeanFactory容器的决定权交给了子类
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			//beanFactory的准备工作,对各种属性进行填充
 			prepareBeanFactory(beanFactory);
 
 			try {
-				// Allows post-processing of the bean factory in context subclasses.
 				//子类覆盖方法做额外处理，此处我们一般不做任何扩展工作
 				postProcessBeanFactory(beanFactory);
 
@@ -585,7 +585,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				//初始化事件监听多路广播器
 				initApplicationEventMulticaster();
 
-				// Initialize other special beans in specific context subclasses.
+				//钩子方法
 				onRefresh();
 
 				// Check for listener beans and register them.
