@@ -1178,14 +1178,16 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @see #instantiateBean
 	 */
 	protected BeanWrapper createBeanInstance(String beanName, RootBeanDefinition mbd, @Nullable Object[] args) {
-		// Make sure bean class is actually resolved at this point.
+		//确认需要创建的bean实例的类可以实例化
 		Class<?> beanClass = resolveBeanClass(mbd, beanName);
 
+		//确保class不为空，并且访问权限是public
 		if (beanClass != null && !Modifier.isPublic(beanClass.getModifiers()) && !mbd.isNonPublicAccessAllowed()) {
 			throw new BeanCreationException(mbd.getResourceDescription(), beanName,
 					"Bean class isn't public, and non-public access not allowed: " + beanClass.getName());
 		}
 
+		//判断当前的beanDefinition是否包含实例供应器，此处相当于一个回调方法，利用回调方法来创建bean
 		Supplier<?> instanceSupplier = mbd.getInstanceSupplier();
 		if (instanceSupplier != null) {
 			return obtainFromSupplier(instanceSupplier, beanName);
@@ -1222,13 +1224,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			return autowireConstructor(beanName, mbd, ctors, args);
 		}
 
-		// Preferred constructors for default construction?
+		// 找到最合适的默认构造器
 		ctors = mbd.getPreferredConstructors();
 		if (ctors != null) {
+			//构造函数自动注入
 			return autowireConstructor(beanName, mbd, ctors, null);
 		}
-
-		// No special handling: simply use no-arg constructor.
+		//使用无参构造函数创建对象，如果没有无参构造且存在多个有参构造且没有@autoWired注解构造会抱错。
 		return instantiateBean(beanName, mbd);
 	}
 
@@ -1323,8 +1325,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 						getAccessControlContext());
 			}
 			else {
+				//获取实例化策略并且进行实例化操作
 				beanInstance = getInstantiationStrategy().instantiate(mbd, beanName, this);
 			}
+			//包装BeanWrapper
 			BeanWrapper bw = new BeanWrapperImpl(beanInstance);
 			initBeanWrapper(bw);
 			return bw;
