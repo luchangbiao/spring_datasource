@@ -1,6 +1,9 @@
 package org.springframework.nashibing.bean;
 
-public class Person {
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.InitializingBean;
+
+public class Person implements InitializingBean,FactoryBean {
     private int id;
     private String name;
     private int age;
@@ -51,4 +54,24 @@ public class Person {
                 ", gender='" + gender + '\'' +
                 '}';
     }
+
+	@Override
+	public Object getObject() throws Exception {
+		return new Person();
+	}
+
+	@Override
+	public Class<?> getObjectType() {
+		return Person.class;
+	}
+
+	@Override
+	public boolean isSingleton() {
+		return false;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		System.out.println("========abcddrfafa=======");
+	}
 }
