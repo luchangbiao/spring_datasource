@@ -186,7 +186,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	/** Logger used by this class. Available to subclasses. */
 	protected final Log logger = LogFactory.getLog(getClass());
 
-	/** Unique id for this context, if any. */
+
+	/**
+	 * 创建上下文唯一标识
+	 */
 	private String id = ObjectUtils.identityToString(this);
 
 	/** Display name. */
@@ -253,6 +256,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * Create a new AbstractApplicationContext with no parent.
 	 */
 	public AbstractApplicationContext() {
+		//创建资源模式处理器
 		this.resourcePatternResolver = getResourcePatternResolver();
 	}
 
@@ -563,7 +567,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			//obtainFreshBeanFactory 方法调用了两个抽象方法 refreshBeanFactory和 getBeanFactory 这样具体要取那中BeanFactory容器的决定权交给了子类
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
-			//beanFactory的准备工作,对各种属性进行填充
+			//beanFactory的准备工作,对各种属性进行填充(初始化bean工厂)
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -628,8 +632,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * active flag as well as performing any initialization of property sources.
 	 */
 	protected void prepareRefresh() {
-		// Switch to active.
+		//1、设置spring的启动时间
 		this.startupDate = System.currentTimeMillis();
+		//2、设置开启和关闭的一个标志位
 		this.closed.set(false);
 		this.active.set(true);
 
@@ -642,25 +647,20 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			}
 		}
 
-		// Initialize any placeholder property sources in the context environment.
 		initPropertySources();
 
-		// Validate that all properties marked as required are resolvable:
-		// see ConfigurablePropertyResolver#setRequiredProperties
+	   //3、获取当前环境变量，并且设置属性值
 		getEnvironment().validateRequiredProperties();
 
-		// Store pre-refresh ApplicationListeners...
+		//4、设置监听器以及需要发布的一些事件的集合
 		if (this.earlyApplicationListeners == null) {
 			this.earlyApplicationListeners = new LinkedHashSet<>(this.applicationListeners);
 		}
 		else {
-			// Reset local application listeners to pre-refresh state.
 			this.applicationListeners.clear();
 			this.applicationListeners.addAll(this.earlyApplicationListeners);
 		}
 
-		// Allow for the collection of early ApplicationEvents,
-		// to be published once the multicaster is available...
 		this.earlyApplicationEvents = new LinkedHashSet<>();
 	}
 
@@ -697,7 +697,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
-		// Configure the bean factory with context callbacks.
+		// 设置忽略的aware接口
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
 		beanFactory.ignoreDependencyInterface(EnvironmentAware.class);
 		beanFactory.ignoreDependencyInterface(EmbeddedValueResolverAware.class);
