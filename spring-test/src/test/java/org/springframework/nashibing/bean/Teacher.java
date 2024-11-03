@@ -1,54 +1,81 @@
 package org.springframework.nashibing.bean;
 
-public class Teacher {
-    private int id;
-    private String name;
-    private int age;
-    private String gender;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 
-    public Teacher() {
-        System.out.println("teacher被创建");
-    }
+public class Teacher implements ApplicationContextAware, EnvironmentAware {
+	private int id;
+	private String name;
+	private int age;
+	private String gender;
+	ApplicationContext applicationContext;
+	Environment environment;
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public Teacher() {
+		System.out.println("teacher被创建");
+	}
 
-    public String getName() {
-        return name;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public int getAge() {
-        return age;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getGender() {
-        return gender;
-    }
+	public int getAge() {
+		return age;
+	}
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+	public void setAge(int age) {
+		this.age = age;
+	}
 
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                '}';
-    }
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	@Override
+	public String toString() {
+		return "Teacher{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", age=" + age +
+				", gender='" + gender + '\'' +
+				'}';
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+	}
+
+	@Override
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
+	}
+
+	public ApplicationContext getApplicationContext() {
+		return applicationContext;
+	}
+
+	public Environment getEnvironment() {
+		return environment;
+	}
 }

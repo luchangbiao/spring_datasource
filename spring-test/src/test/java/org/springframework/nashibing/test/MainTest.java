@@ -3,6 +3,7 @@ package org.springframework.nashibing.test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.nashibing.bean.Person;
+import org.springframework.nashibing.bean.Teacher;
 
 //容器中的person对象是什么时候创建的？
 //容器中的对象在容器创建完成之前就已经把对象创建好了
@@ -21,6 +22,8 @@ public class MainTest {
         Person person = (Person) context.getBean("person");
 		//获取对象的时候不需要强制类型转换
        // Person person = context.getBean("person", Person.class);
-        System.out.println(person);
+		Teacher teacher = (Teacher) context.getBean("teacher");
+		System.out.println(teacher.getEnvironment());
+        System.out.println(teacher.getApplicationContext());
 	}
 }
