@@ -17,7 +17,10 @@ public class MainTest {
 		 *
 		 *
 		 * * */
-		ApplicationContext context = new ClassPathXmlApplicationContext("ioc.xml");
+		//ApplicationContext context = new ClassPathXmlApplicationContext("ioc.xml");
+
+		ApplicationContext context = new ClassPathXmlApplicationContext("spring_${username}.xml");
+
 		//获取具体的bean实例对象，需要进行强制类型转换
         Person person = (Person) context.getBean("person");
 		//获取对象的时候不需要强制类型转换

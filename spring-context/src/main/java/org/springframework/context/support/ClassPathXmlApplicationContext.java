@@ -57,6 +57,7 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 
 	/**
 	 * Create a new ClassPathXmlApplicationContext for bean-style configuration.
+	 *
 	 * @see #setConfigLocation
 	 * @see #setConfigLocations
 	 * @see #afterPropertiesSet()
@@ -66,6 +67,7 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 
 	/**
 	 * Create a new ClassPathXmlApplicationContext for bean-style configuration.
+	 *
 	 * @param parent the parent context
 	 * @see #setConfigLocation
 	 * @see #setConfigLocations
@@ -78,16 +80,18 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	/**
 	 * Create a new ClassPathXmlApplicationContext, loading the definitions
 	 * from the given XML file and automatically refreshing the context.
+	 *
 	 * @param configLocation resource location
 	 * @throws BeansException if context creation failed
 	 */
 	public ClassPathXmlApplicationContext(String configLocation) throws BeansException {
-		this(new String[] {configLocation}, true, null);
+		this(new String[]{configLocation}, true, null);
 	}
 
 	/**
 	 * Create a new ClassPathXmlApplicationContext, loading the definitions
 	 * from the given XML files and automatically refreshing the context.
+	 *
 	 * @param configLocations array of resource locations
 	 * @throws BeansException if context creation failed
 	 */
@@ -99,8 +103,9 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	 * Create a new ClassPathXmlApplicationContext with the given parent,
 	 * loading the definitions from the given XML files and automatically
 	 * refreshing the context.
+	 *
 	 * @param configLocations array of resource locations
-	 * @param parent the parent context
+	 * @param parent          the parent context
 	 * @throws BeansException if context creation failed
 	 */
 	public ClassPathXmlApplicationContext(String[] configLocations, @Nullable ApplicationContext parent)
@@ -112,10 +117,11 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	/**
 	 * Create a new ClassPathXmlApplicationContext, loading the definitions
 	 * from the given XML files.
+	 *
 	 * @param configLocations array of resource locations
-	 * @param refresh whether to automatically refresh the context,
-	 * loading all bean definitions and creating all singletons.
-	 * Alternatively, call refresh manually after further configuring the context.
+	 * @param refresh         whether to automatically refresh the context,
+	 *                        loading all bean definitions and creating all singletons.
+	 *                        Alternatively, call refresh manually after further configuring the context.
 	 * @throws BeansException if context creation failed
 	 * @see #refresh()
 	 */
@@ -126,19 +132,21 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	/**
 	 * Create a new ClassPathXmlApplicationContext with the given parent,
 	 * loading the definitions from the given XML files.
+	 *
 	 * @param configLocations array of resource locations
-	 * @param refresh whether to automatically refresh the context,
-	 * loading all bean definitions and creating all singletons.
-	 * Alternatively, call refresh manually after further configuring the context.
-	 * @param parent the parent context
+	 * @param refresh         whether to automatically refresh the context,
+	 *                        loading all bean definitions and creating all singletons.
+	 *                        Alternatively, call refresh manually after further configuring the context.
+	 * @param parent          the parent context
 	 * @throws BeansException if context creation failed
 	 * @see #refresh()
 	 */
 	public ClassPathXmlApplicationContext(
 			String[] configLocations, boolean refresh, @Nullable ApplicationContext parent)
 			throws BeansException {
-      //调用父类构造方法，进行相关的对象创建等操作
+		//调用父类构造方法，进行相关的对象创建等操作,初始化成员属性 beanFactoryPostProcessors、applicationListeners、resourcePatternResolver
 		super(parent);
+		//设置并获取系统环境变量并进行配置文件名称变量替换
 		setConfigLocations(configLocations);
 		if (refresh) {
 			refresh();
@@ -152,7 +160,8 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	 * <p>This is a convenience method to load class path resources relative to a
 	 * given Class. For full flexibility, consider using a GenericApplicationContext
 	 * with an XmlBeanDefinitionReader and a ClassPathResource argument.
-	 * @param path relative (or absolute) path within the class path
+	 *
+	 * @param path  relative (or absolute) path within the class path
 	 * @param clazz the class to load resources with (basis for the given paths)
 	 * @throws BeansException if context creation failed
 	 * @see org.springframework.core.io.ClassPathResource#ClassPathResource(String, Class)
@@ -160,12 +169,13 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	 * @see org.springframework.beans.factory.xml.XmlBeanDefinitionReader
 	 */
 	public ClassPathXmlApplicationContext(String path, Class<?> clazz) throws BeansException {
-		this(new String[] {path}, clazz);
+		this(new String[]{path}, clazz);
 	}
 
 	/**
 	 * Create a new ClassPathXmlApplicationContext, loading the definitions
 	 * from the given XML files and automatically refreshing the context.
+	 *
 	 * @param paths array of relative (or absolute) paths within the class path
 	 * @param clazz the class to load resources with (basis for the given paths)
 	 * @throws BeansException if context creation failed
@@ -181,8 +191,9 @@ public class ClassPathXmlApplicationContext extends AbstractXmlApplicationContex
 	 * Create a new ClassPathXmlApplicationContext with the given parent,
 	 * loading the definitions from the given XML files and automatically
 	 * refreshing the context.
-	 * @param paths array of relative (or absolute) paths within the class path
-	 * @param clazz the class to load resources with (basis for the given paths)
+	 *
+	 * @param paths  array of relative (or absolute) paths within the class path
+	 * @param clazz  the class to load resources with (basis for the given paths)
 	 * @param parent the parent context
 	 * @throws BeansException if context creation failed
 	 * @see org.springframework.core.io.ClassPathResource#ClassPathResource(String, Class)
