@@ -1,7 +1,6 @@
 package org.springframework.nashibing.test;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.nashibing.bean.Person;
 import org.springframework.nashibing.bean.Teacher;
 
@@ -19,14 +18,16 @@ public class MainTest {
 		 * * */
 		//ApplicationContext context = new ClassPathXmlApplicationContext("ioc.xml");
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("spring_${username}.xml");
+		//ApplicationContext context = new ClassPathXmlApplicationContext("spring_${username}.xml");
+
+		ApplicationContext context = new MyClassPathXmlApplication("ioc.xml");
 
 		//获取具体的bean实例对象，需要进行强制类型转换
-        Person person = (Person) context.getBean("person");
+		Person person = (Person) context.getBean("person");
 		//获取对象的时候不需要强制类型转换
-       // Person person = context.getBean("person", Person.class);
+		// Person person = context.getBean("person", Person.class);
 		Teacher teacher = (Teacher) context.getBean("teacher");
 		System.out.println(teacher.getEnvironment());
-        System.out.println(teacher.getApplicationContext());
+		System.out.println(teacher.getApplicationContext());
 	}
 }
