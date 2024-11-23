@@ -676,6 +676,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		if (this.earlyApplicationListeners == null) {
 			this.earlyApplicationListeners = new LinkedHashSet<>(this.applicationListeners);
 		} else {
+			//如果不等于空则情况集合元素对象
 			this.applicationListeners.clear();
 			this.applicationListeners.addAll(this.earlyApplicationListeners);
 		}
@@ -701,7 +702,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @see #getBeanFactory()
 	 */
 	protected ConfigurableListableBeanFactory obtainFreshBeanFactory() {
+		//初始化beanFactory,并进行xml文件读取，并将得到的beanFactory记录到当前实体的属性中
 		refreshBeanFactory();
+		//返回当前实体的beanFactory属性
 		return getBeanFactory();
 	}
 
