@@ -61,6 +61,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 
 	/**
 	 * Create a new AbstractXmlApplicationContext with the given parent context.
+	 *
 	 * @param parent the parent context
 	 */
 	public AbstractXmlApplicationContext(@Nullable ApplicationContext parent) {
@@ -78,17 +79,17 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 
 	/**
 	 * Loads the bean definitions via an XmlBeanDefinitionReader.
+	 *
 	 * @see org.springframework.beans.factory.xml.XmlBeanDefinitionReader
 	 * @see #initBeanDefinitionReader
 	 * @see #loadBeanDefinitions
 	 */
 	@Override
 	protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException {
-		// 适配器模式创建一个beanFactory 的 XmlBeanDefinitionReader  后续对beanDefinitionReader 进行操作
+		//创建一个xml的beanDefinitionReader，并通过回调设置到beanFactory 中
 		XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
 
-		// Configure the bean definition reader with this context's
-		// resource loading environment.
+		// 给reader对象设置环境对象
 		beanDefinitionReader.setEnvironment(getEnvironment());
 		beanDefinitionReader.setResourceLoader(this);
 
@@ -98,9 +99,9 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 		 */
 		beanDefinitionReader.setEntityResolver(new ResourceEntityResolver(this));
 
-		// Allow a subclass to provide custom initialization of the reader,
-		// then proceed with actually loading the bean definitions.
+		// 初始化beanDefinitionReader对象，此处设置配置文件是否需要验证(适配器模式)
 		initBeanDefinitionReader(beanDefinitionReader);
+		//开始完成beanDefinitionReader的加载
 		loadBeanDefinitions(beanDefinitionReader);
 	}
 
@@ -109,6 +110,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 * of this context. The default implementation sets the validating flag.
 	 * <p>Can be overridden in subclasses, e.g. for turning off XML validation
 	 * or using a different {@link BeanDefinitionDocumentReader} implementation.
+	 *
 	 * @param reader the bean definition reader used by this context
 	 * @see XmlBeanDefinitionReader#setValidating
 	 * @see XmlBeanDefinitionReader#setDocumentReaderClass
@@ -121,19 +123,22 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 * Load the bean definitions with the given XmlBeanDefinitionReader.
 	 * <p>The lifecycle of the bean factory is handled by the {@link #refreshBeanFactory}
 	 * method; hence this method is just supposed to load and/or register bean definitions.
+	 *
 	 * @param reader the XmlBeanDefinitionReader to use
 	 * @throws BeansException in case of bean registration errors
-	 * @throws IOException if the required XML document isn't found
+	 * @throws IOException    if the required XML document isn't found
 	 * @see #refreshBeanFactory
 	 * @see #getConfigLocations
 	 * @see #getResources
 	 * @see #getResourcePatternResolver
 	 */
 	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) throws BeansException, IOException {
+		//以Resource的方式获得配置文件的资源位置（一般用不到，取决于启动文件传的是什么）
 		Resource[] configResources = getConfigResources();
 		if (configResources != null) {
 			reader.loadBeanDefinitions(configResources);
 		}
+		//以String的方式获得配置文件的资源位置
 		String[] configLocations = getConfigLocations();
 		if (configLocations != null) {
 			reader.loadBeanDefinitions(configLocations);
@@ -145,6 +150,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 * files that this context should be built with.
 	 * <p>The default implementation returns {@code null}. Subclasses can override
 	 * this to provide pre-built Resource objects rather than location Strings.
+	 *
 	 * @return an array of Resource objects, or {@code null} if none
 	 * @see #getConfigLocations()
 	 */

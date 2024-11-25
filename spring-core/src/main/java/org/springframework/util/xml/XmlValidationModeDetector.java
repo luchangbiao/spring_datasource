@@ -97,6 +97,7 @@ public class XmlValidationModeDetector {
 			String content;
 			while ((content = reader.readLine()) != null) {
 				content = consumeCommentTokens(content);
+				//如果读取的行是空或者注释则略过
 				if (!StringUtils.hasText(content)) {
 					continue;
 				}
@@ -104,11 +105,13 @@ public class XmlValidationModeDetector {
 					isDtdValidated = true;
 					break;
 				}
+				//读取以<开始的符号
 				if (hasOpeningTag(content)) {
 					// End of meaningful data...
 					break;
 				}
 			}
+			//返回的是dtd或者是xsd 检验模式
 			return (isDtdValidated ? VALIDATION_DTD : VALIDATION_XSD);
 		}
 		catch (CharConversionException ex) {
